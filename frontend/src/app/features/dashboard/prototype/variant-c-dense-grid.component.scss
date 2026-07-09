@@ -1,0 +1,154 @@
+.layout {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: 100vh;
+  padding: 10px;
+  box-sizing: border-box;
+  background: #f2f2f2;
+}
+
+mat-card {
+  padding: 12px;
+  overflow: hidden;
+}
+
+h3 {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+// Columna izquierda: A1 (video, 2/3 del alto) + A2 (KPIs, debajo)
+.col-left {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.video-panel {
+  flex: 3;
+  padding: 0;
+  display: flex;
+}
+
+.video-placeholder {
+  flex: 1;
+  background: linear-gradient(135deg, #1a1a1a, #333);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #fff;
+}
+
+.live-badge {
+  color: #e53935;
+  font-weight: bold;
+  font-size: 14px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.video-caption {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.kpi-row {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  min-height: 90px;
+}
+
+.kpi {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.kpi-value {
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.kpi-label {
+  font-size: 11px;
+  color: #777;
+  margin-top: 4px;
+}
+
+// Columna derecha: B1 (toda la informacion agrupada, 1/3 del ancho, absorbe lo que era B2)
+.col-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+.info-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.zone-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 50px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.zone-name {
+  color: #555;
+}
+
+.zone-count {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+::ng-deep .warn .mdc-linear-progress__bar-inner {
+  border-color: #fb8c00 !important;
+}
+
+::ng-deep .danger .mdc-linear-progress__bar-inner {
+  border-color: #e53935 !important;
+}
+
+.chart {
+  height: 140px;
+}
+
+.events-section {
+  flex: 1;
+}
+
+.event-label {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.event-meta {
+  margin-left: auto;
+  font-size: 11px;
+  color: #888;
+}

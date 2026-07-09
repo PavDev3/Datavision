@@ -1,0 +1,46 @@
+<div class="layout">
+  <div class="col-left">
+    <mat-card class="video-panel">
+      @if (frame(); as f) {
+        <img [src]="f.image" alt="Feed en vivo" class="video-image" />
+      } @else {
+        <div class="video-placeholder">
+          <span class="status-badge" [class.live]="connected()">
+            {{ connected() ? '● Conectado, esperando frames…' : '○ Conectando…' }}
+          </span>
+        </div>
+      }
+    </mat-card>
+
+    <div class="kpi-row">
+      <mat-card class="kpi">
+        <span class="kpi-value">{{ frame()?.object_count ?? 0 }}</span>
+        <span class="kpi-label">Objetos detectados</span>
+      </mat-card>
+
+      <mat-card class="kpi">
+        <span class="kpi-value">{{ (frame()?.fps ?? 0).toFixed(1) }}</span>
+        <span class="kpi-label">FPS publicados</span>
+      </mat-card>
+
+      <mat-card class="kpi">
+        <span class="kpi-value">{{ frame()?.frame_number ?? '—' }}</span>
+        <span class="kpi-label">Frame nº</span>
+      </mat-card>
+    </div>
+  </div>
+
+  <mat-card class="col-right">
+    <section class="info-section">
+      <h3>Objetos por clase</h3>
+      @for (entry of classEntries(); track entry[0]) {
+        <div class="class-row">
+          <span class="class-name">{{ entry[0] }}</span>
+          <span class="class-count">{{ entry[1] }}</span>
+        </div>
+      } @empty {
+        <p class="empty">Sin datos todavía.</p>
+      }
+    </section>
+  </mat-card>
+</div>

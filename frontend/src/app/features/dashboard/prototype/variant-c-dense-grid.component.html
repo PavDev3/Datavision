@@ -1,0 +1,58 @@
+<div class="layout">
+  <div class="col-left">
+    <mat-card class="video-panel">
+      <div class="video-placeholder">
+        <span class="live-badge">● EN VIVO</span>
+        <span class="video-caption">Cámara — Cruce Town Quay</span>
+      </div>
+    </mat-card>
+
+    <div class="kpi-row">
+      <mat-card class="kpi">
+        <span class="kpi-value">{{ totalVehicles() }}</span>
+        <span class="kpi-label">Vehículos totales</span>
+      </mat-card>
+
+      <mat-card class="kpi">
+        <span class="kpi-value">{{ mostCongestedZone().count }}</span>
+        <span class="kpi-label">{{ mostCongestedZone().label }}</span>
+      </mat-card>
+
+      <mat-card class="kpi">
+        <span class="kpi-value">{{ events().length }}</span>
+        <span class="kpi-label">Eventos recientes</span>
+      </mat-card>
+    </div>
+  </div>
+
+  <mat-card class="col-right">
+    <section class="info-section">
+      <h3>Ocupación por acceso</h3>
+      @for (zone of zones(); track zone.name) {
+        <div class="zone-row">
+          <span class="zone-name">{{ zone.label }}</span>
+          <mat-progress-bar mode="determinate" [value]="zone.occupancyPct"
+            [class.warn]="zone.occupancyPct >= 50" [class.danger]="zone.occupancyPct >= 80"></mat-progress-bar>
+          <span class="zone-count">{{ zone.count }}/{{ zone.capacity }}</span>
+        </div>
+      }
+    </section>
+
+    <section class="info-section">
+      <h3>Vehículos por clase</h3>
+      <div echarts [options]="barOptions()" class="chart"></div>
+    </section>
+
+    <section class="info-section events-section">
+      <h3>Log de eventos</h3>
+      <mat-list dense>
+        @for (event of events(); track event.timestamp + event.type) {
+          <mat-list-item>
+            <span class="event-label">{{ event.label }}</span>
+            <span class="event-meta">{{ event.zone }} · {{ event.timestamp }}</span>
+          </mat-list-item>
+        }
+      </mat-list>
+    </section>
+  </mat-card>
+</div>

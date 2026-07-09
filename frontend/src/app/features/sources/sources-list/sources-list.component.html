@@ -1,0 +1,30 @@
+<div class="layout">
+  <h2>Fuentes de vídeo</h2>
+
+  <a mat-stroked-button routerLink="/sources/new" class="new-link">+ Añadir fuente</a>
+
+  @if (errorMessage()) {
+    <p class="message error">{{ errorMessage() }}</p>
+  }
+
+  <div class="list">
+    @for (source of sources(); track source.id) {
+      <mat-card class="source-row">
+        <div class="info">
+          <span class="name">{{ source.name }}</span>
+          <span class="meta">{{ domainNameFor(source.domain_id) }} · {{ source.type }}</span>
+          <span class="url">{{ source.url }}</span>
+        </div>
+        <div class="zones-badge" [class.has-zones]="zoneCountFor(source) > 0">
+          {{ zoneCountFor(source) > 0 ? zoneCountFor(source) + ' zonas' : 'sin zonas' }}
+        </div>
+        <a mat-button [routerLink]="['/sources', source.id, 'zones']">Editar zonas</a>
+        <button mat-icon-button color="warn" (click)="deleteSource(source)" aria-label="Eliminar fuente">
+          ✕
+        </button>
+      </mat-card>
+    } @empty {
+      <p class="empty">No hay fuentes todavía.</p>
+    }
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<form class="start-form" [formGroup]="form" (ngSubmit)="submit()">
+  <h2>Iniciar sesión</h2>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Dominio</mat-label>
+    <mat-select formControlName="domain_id" (selectionChange)="onDomainChange()">
+      @for (domain of domains(); track domain.id) {
+        <mat-option [value]="domain.id">{{ domain.display_name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Fuente</mat-label>
+    <mat-select formControlName="source_id">
+      @for (source of sources(); track source.id) {
+        <mat-option [value]="source.id">{{ source.name }}</mat-option>
+      } @empty {
+        <mat-option disabled>Elige primero un dominio</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" type="submit" [disabled]="starting()">
+    {{ starting() ? 'Iniciando…' : 'Iniciar sesión' }}
+  </button>
+
+  @if (errorMessage()) {
+    <p class="message error">{{ errorMessage() }}</p>
+  }
+</form>

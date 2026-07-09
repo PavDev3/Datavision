@@ -1,0 +1,27 @@
+<div class="layout">
+  <div class="map-panel">
+    <div #mapEl class="map"></div>
+  </div>
+
+  <div class="video-panel">
+    <mat-card class="video-card">
+      <div class="video-placeholder">
+        <span class="live-badge">● EN VIVO</span>
+        <span class="video-caption">Cámara — Cruce Town Quay</span>
+      </div>
+    </mat-card>
+
+    <mat-card class="stats-card">
+      <div class="stat-row">
+        <span class="stat-label">Vehículos totales</span>
+        <span class="stat-value">{{ totalVehicles() }}</span>
+      </div>
+      @for (zone of data(); track zone.name) {
+        <div class="stat-row small">
+          <span class="stat-label">{{ zone.label }}</span>
+          <span class="stat-value">{{ zone.count }} / {{ zone.capacity }}</span>
+        </div>
+      }
+    </mat-card>
+  </div>
+</div>

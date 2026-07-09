@@ -1,0 +1,47 @@
+<div class="layout">
+  <div class="left-col">
+    <mat-card class="schematic-card">
+      <h3>Cruce — vista esquemática</h3>
+      <svg viewBox="0 0 300 300" class="schematic">
+        <rect x="0" y="0" width="300" height="300" fill="#eef1f4" />
+
+        <!-- accesos -->
+        <rect x="120" y="0" width="60" height="120"
+              [attr.fill]="colorFor(zoneByName().get('entrada_norte')?.occupancyPct ?? 0)" />
+        <rect x="120" y="180" width="60" height="120"
+              [attr.fill]="colorFor(zoneByName().get('entrada_sur')?.occupancyPct ?? 0)" />
+        <rect x="180" y="120" width="120" height="60"
+              [attr.fill]="colorFor(zoneByName().get('entrada_este')?.occupancyPct ?? 0)" />
+        <rect x="0" y="120" width="120" height="60"
+              [attr.fill]="colorFor(zoneByName().get('entrada_oeste')?.occupancyPct ?? 0)" />
+
+        <!-- interseccion -->
+        <rect x="120" y="120" width="60" height="60" fill="#607d8b" />
+
+        <!-- etiquetas -->
+        <text x="150" y="24" text-anchor="middle" class="zone-label">N: {{ zoneByName().get('entrada_norte')?.count }}</text>
+        <text x="150" y="290" text-anchor="middle" class="zone-label">S: {{ zoneByName().get('entrada_sur')?.count }}</text>
+        <text x="260" y="154" text-anchor="middle" class="zone-label">E: {{ zoneByName().get('entrada_este')?.count }}</text>
+        <text x="40" y="154" text-anchor="middle" class="zone-label">O: {{ zoneByName().get('entrada_oeste')?.count }}</text>
+      </svg>
+      <p class="total">Total en el cruce: <strong>{{ totalVehicles() }}</strong></p>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <h3>Vehículos en el tiempo</h3>
+      <div echarts [options]="chartOptions()" class="chart"></div>
+    </mat-card>
+  </div>
+
+  <mat-card class="events-card">
+    <h3>Eventos recientes</h3>
+    <mat-list>
+      @for (event of events(); track event.timestamp + event.type) {
+        <mat-list-item>
+          <span class="event-label">{{ event.label }}</span>
+          <span class="event-meta">{{ event.zone }} · {{ event.timestamp }}</span>
+        </mat-list-item>
+      }
+    </mat-list>
+  </mat-card>
+</div>

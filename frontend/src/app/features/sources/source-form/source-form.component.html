@@ -1,0 +1,45 @@
+<form class="source-form" [formGroup]="form" (ngSubmit)="submit()">
+  <h2>Añadir fuente de vídeo</h2>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="name" placeholder="Cruce Town Quay" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Tipo</mat-label>
+    <mat-select formControlName="type">
+      @for (type of sourceTypes; track type) {
+        <mat-option [value]="type">{{ type }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>URL / ruta</mat-label>
+    <input matInput formControlName="url" placeholder="vision/samples/trafico_southampton_junction.mp4" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Dominio</mat-label>
+    <mat-select formControlName="domain_id">
+      @for (domain of domains(); track domain.id) {
+        <mat-option [value]="domain.id">{{ domain.display_name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" type="submit" [disabled]="submitting()">
+    {{ submitting() ? 'Creando…' : 'Crear fuente' }}
+  </button>
+
+  @if (successMessage()) {
+    <p class="message success">{{ successMessage() }}</p>
+    @if (createdSourceId(); as id) {
+      <a [routerLink]="['/sources', id, 'zones']" mat-stroked-button>Marcar zonas</a>
+    }
+  }
+  @if (errorMessage()) {
+    <p class="message error">{{ errorMessage() }}</p>
+  }
+</form>

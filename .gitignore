@@ -1,0 +1,76 @@
+# ========================
+# Python / Backend / Vision
+# ========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# YOLO / modelos
+*.pt
+*.onnx
+*.engine
+models/
+
+# ========================
+# Node / Angular / Frontend
+# ========================
+node_modules/
+.angular/
+dist/
+/frontend/dist/
+
+# ========================
+# Base de datos
+# ========================
+*.sql.bak
+postgres_data/
+
+# ========================
+# Docker
+# ========================
+.docker/
+
+# ========================
+# IDE / editores
+# ========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+
+# ========================
+# Vídeos de prueba
+# ========================
+*.mp4
+*.avi
+*.mkv
+*.mov
+videos/
+
+# ========================
+# Logs
+# ========================
+*.log
+logs/
+
+# ========================
+# Claves y secretos
+# ========================
+*.pem
+*.key
+secrets.json

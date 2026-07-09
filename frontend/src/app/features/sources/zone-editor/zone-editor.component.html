@@ -1,0 +1,88 @@
+<div class="layout">
+  <mat-card class="canvas-card">
+    <h2>Marcar zonas</h2>
+
+    @if (previewImage(); as img) {
+      <div class="canvas-wrapper">
+        <img [src]="img" alt="Vista previa del vídeo" class="preview-image" />
+        <svg
+          class="overlay"
+          viewBox="0 0 1 1"
+          preserveAspectRatio="none"
+          (click)="onSvgClick($event)"
+        >
+          @for (zoneName of definedZoneNames(); track zoneName) {
+            <polygon
+              [attr.points]="pointsToSvgString(zonesGeometry()[zoneName].points)"
+              [attr.fill]="colorFor(zoneName)"
+              fill-opacity="0.35"
+              [attr.stroke]="colorFor(zoneName)"
+              stroke-width="0.004"
+            />
+          }
+
+          @if (currentPoints().length > 0) {
+            <polyline
+              [attr.points]="pointsToSvgString(currentPoints())"
+              fill="none"
+              [attr.stroke]="selectedZone() ? colorFor(selectedZone()!) : '#999'"
+              stroke-width="0.004"
+            />
+            @for (point of currentPoints(); track $index) {
+              <circle [attr.cx]="point[0]" [attr.cy]="point[1]" r="0.006"
+                [attr.fill]="selectedZone() ? colorFor(selectedZone()!) : '#999'" />
+            }
+          }
+        </svg>
+      </div>
+    } @else if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    } @else {
+      <p>Cargando vista previa…</p>
+    }
+  </mat-card>
+
+  <mat-card class="controls-card">
+    <h3>Zonas del dominio</h3>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Zona a marcar</mat-label>
+      <mat-select [ngModel]="selectedZone()" (ngModelChange)="selectedZone.set($event)">
+        @for (name of zoneNames(); track name) {
+          <mat-option [value]="name">{{ name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <p class="hint">
+      Selecciona una zona y haz clic en la imagen para ir marcando sus vértices (mínimo 3).
+      Puntos marcados: {{ currentPoints().length }}
+    </p>
+
+    <button mat-stroked-button (click)="closeZone()" [disabled]="!selectedZone() || currentPoints().length < 3">
+      Cerrar zona
+    </button>
+
+    <h3 class="defined-title">Zonas ya marcadas</h3>
+    @for (name of definedZoneNames(); track name) {
+      <div class="zone-item">
+        <span class="dot" [style.background]="colorFor(name)"></span>
+        <span class="zone-item-name">{{ name }}</span>
+        <button mat-icon-button (click)="removeZone(name)" aria-label="Borrar zona">✕</button>
+      </div>
+    } @empty {
+      <p class="hint">Ninguna zona marcada todavía.</p>
+    }
+
+    <button mat-flat-button color="primary" (click)="save()" [disabled]="saving()">
+      {{ saving() ? 'Guardando…' : 'Guardar' }}
+    </button>
+
+    @if (savedMessage()) {
+      <p class="message success">{{ savedMessage() }}</p>
+    }
+    @if (errorMessage()) {
+      <p class="message error">{{ errorMessage() }}</p>
+    }
+  </mat-card>
+</div>
